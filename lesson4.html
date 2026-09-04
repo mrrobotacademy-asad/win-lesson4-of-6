@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحصة 4: Word عملي + مقدمة Excel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #00cec9;
+            --correct: #2ed573;
+            --wrong: #ff4757;
+            --warning: #f1c40f;
+            --bg: #0f0c29;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --radius: 15px;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at center, #1e1b4b, #0f0c29);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            font-size: 1.3rem; 
+        }
+
+        .header { text-align: center; padding: 20px; width: 100%; }
+        
+        .container {
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 25px;
+            width: 90%;
+            max-width: 900px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .explanation-slider {
+            position: relative;
+            background: rgba(0,0,0,0.3);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin: 20px 0;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 5px solid var(--primary);
+            transition: 0.3s;
+        }
+
+        .explanation-card h3 { color: var(--secondary); margin-top: 0; font-size: 2rem; }
+        .explanation-card p { font-size: 1.4rem; line-height: 1.6; }
+        .example-text { color: var(--warning); margin-top: 15px; font-size: 1.3rem; font-style: italic; }
+        .english-term { font-family: 'Fira Code', monospace; color: #58D68D; direction: ltr; display: inline-block; font-size: 1.2rem; background: rgba(0,0,0,0.4); padding: 2px 8px; border-radius: 5px; }
+        
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: 0.2s;
+            font-family: 'Cairo', sans-serif;
+        }
+        .nav-btn:hover { background: #8e44ad; }
+        .nav-btn:disabled { background: #444; cursor: not-allowed; }
+
+        .btn-main {
+            background: linear-gradient(to right, var(--primary), #8e44ad);
+            color: white; border: none; padding: 18px 40px;
+            cursor: pointer; font-weight: 900; border-radius: 50px; font-size: 1.4rem;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+            font-family: 'Cairo', sans-serif;
+            margin-top: 20px;
+        }
+        .btn-main:hover { transform: scale(1.02); }
+
+        .status-bar {
+            display: flex; justify-content: space-between; background: rgba(0,0,0,0.4);
+            padding: 15px 25px; border-radius: var(--radius); margin-bottom: 25px; font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
+        .option-btn {
+            background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1);
+            padding: 20px; color: white; cursor: pointer; border-radius: var(--radius); transition: 0.3s;
+            font-size: 1.3rem; font-family: 'Cairo', sans-serif; text-align: right;
+        }
+        .option-btn:hover { background: rgba(255,255,255,0.1); border-color: var(--secondary); }
+        .option-btn.selected { background: var(--primary); border-color: white; }
+
+        .control-group {
+            display: flex; gap: 15px; justify-content: center; margin-top: 35px; flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 15px 25px; border-radius: 30px; font-size: 1.2rem; border: none; font-weight: bold; cursor: pointer; font-family: 'Cairo', sans-serif; color: white;
+        }
+
+        .hidden { display: none !important; }
+        
+        input[type="text"] {
+            width: 80%; padding: 15px; background: rgba(0,0,0,0.3); border: 2px solid var(--primary); color: white; border-radius: var(--radius); text-align: center; font-size: 1.5rem; font-family: 'Cairo', sans-serif;
+        }
+
+        .bottom-nav {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            max-width: 900px;
+            padding-bottom: 30px;
+        }
+        .bottom-nav a {
+            color: var(--secondary); text-decoration: none; font-weight: bold; font-size: 1.2rem; background: rgba(0,0,0,0.3); padding: 10px 20px; border-radius: 20px;
+        }
+
+        .feedback-msg { margin-top: 15px; font-size: 1.4rem; font-weight: bold; min-height: 35px; }
+        .correct-text { color: var(--correct); }
+        .wrong-text { color: var(--wrong); }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="assets/images/logo.png" alt="أكاديمية مستر روبوت" style="height: 80px; margin-bottom: 10px;"><br>
+    <h2 style="margin:5px 0; font-size: 1.8rem; color: #ccc;">دورة اساسيات الكمبيوتر و الاوفيس</h2>
+    <h1 style="margin:10px 0; font-size: 2.2rem; color: var(--secondary);">الحصة 4: Word عملي + مقدمة Excel</h1>
+</div>
+
+<div class="container">
+    <div id="learning-screen">
+        <h2 style="color:var(--warning); font-size: 1.8rem;">📖 الشرح</h2>
+        
+        <div class="explanation-slider">
+            <div id="slide-content"></div>
+            <div class="slider-nav">
+                <button class="nav-btn" onclick="moveSlide(-1)" id="prevSlide">السابق</button>
+                <span id="slide-num" style="align-self:center; font-weight:bold; font-size: 1.4rem;"></span>
+                <button class="nav-btn" onclick="moveSlide(1)" id="nextSlide">التالي</button>
+            </div>
+        </div>
+        
+        <button class="btn-main" id="start-quiz-btn" onclick="initQuiz()" style="display:none;">ابدأ اختبار الحصة الرابعة 🎯</button>
+    </div>
+
+    <div id="quiz-screen" class="hidden">
+        <div class="status-bar">
+            <div>⏰ <span id="timer-val">00:00</span></div>
+            <div id="progress-text" style="color:var(--secondary)"></div>
+            <div>⭐ <span id="score-val">0</span></div>
+        </div>
+        
+        <div class="question-zone">
+            <h3 id="q-text" style="font-size: 1.7rem; margin-bottom: 25px;"></h3>
+            
+            <div id="options-container" class="options-grid"></div>
+            
+            <div id="input-container" class="hidden" style="margin-top: 20px;">
+                <input type="text" id="user-input" placeholder="اكتب إجابتك هنا...">
+            </div>
+
+            <div id="feedback-msg" class="feedback-msg"></div>
+
+            <div id="hint-box" style="margin-top:20px; display:none; color:var(--warning); background:rgba(0,0,0,0.3); padding:15px; border-radius:10px; font-size: 1.3rem;">
+                💡 تلميحة: <span id="hint-text"></span>
+            </div>
+
+            <div class="control-group">
+                <button class="control-btn" style="background:#555;" onclick="navigate(-1)" id="prev-btn">السابق</button>
+                <button class="control-btn" style="background:var(--warning); color:#000;" onclick="skipQuestion()">تخطي</button>
+                <button class="control-btn" style="background:var(--wrong);" onclick="revealAnswer()" id="reveal-btn">إظهار الإجابة (-10)</button>
+                <button class="control-btn" style="background:var(--correct); flex-grow:1;" onclick="checkAnswer()">التحقق ✅</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-screen" class="hidden">
+        <h1 style="font-size: 5rem; margin: 10px;">🏆</h1>
+        <h2 id="congrats-msg" style="font-size: 2.2rem; color: var(--warning);"></h2>
+        <p id="final-stats" style="font-size:1.6rem; line-height: 1.8;"></p>
+        <h3 id="evaluation-msg" style="font-size: 1.8rem; margin-top: 20px;"></h3>
+        <br>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn-main" onclick="location.reload()">إعادة الاختبار 🔄</button>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    const lessons = [
+        { 
+            title: "إدراج صورة في الوورد", 
+            en: "Insert Picture",
+            desc: "يمكنك إضافة صورة للنص من قائمة 'إدراج' (Insert) ثم 'صور'. لتصغير الصورة، اضغط عليها واسحب من الدوائر الموجودة على الحواف.", 
+            example: "وضع صورتك الشخصية في السيرة الذاتية." 
+        },
+        { 
+            title: "إدراج جدول في الوورد", 
+            en: "Insert Table",
+            desc: "لرسم شبكة نكتب بداخلها، نختار 'جدول' (Table) من قائمة 'إدراج'. يمكنك تحديد عدد المربعات بالعرض والطول.", 
+            example: "مثل جدول الحصص أو جدول المصروفات." 
+        },
+        { 
+            title: "الطباعة ومراجعة الصفحة", 
+            en: "Print Preview",
+            desc: "قبل طباعة الورقة، نستخدم 'معاينة الطباعة' (Print Preview) لنرى كيف ستبدو الورقة بعد خروجها من الطابعة.", 
+            example: "للتأكد أن الكلام لم يخرج خارج حدود الورقة." 
+        },
+        { 
+            title: "مقدمة عن برنامج إكسيل", 
+            en: "Microsoft Excel",
+            desc: "برنامج إكسيل هو دفتر إلكتروني ضخم مصمم خصيصاً للجداول والحسابات والأرقام. يتكون من أعمدة وصفوف.", 
+            example: "يستخدمه المحاسبون و أصحاب المحلات لحساب الأرباح." 
+        },
+        { 
+            title: "الصفوف والأعمدة", 
+            en: "Rows & Columns",
+            desc: "العمود (Column) يكون بالطول وله حرف مثل (A). والصف (Row) يكون بالعرض وله رقم مثل (1). تقاطع العمود مع الصف يسمى خلية (Cell).", 
+            example: "الخلية الأولى اسمها A1." 
+        },
+        { 
+            title: "كتابة البيانات في إكسيل", 
+            en: "Data Entry",
+            desc: "للكتابة، نضغط على الخلية (المربع) ونبدأ بالكتابة. إذا أردنا تغيير المكتوب، نضغط عليها ضغطة مزدوجة (Double Click).", 
+            example: "نكتب اسم الصنف في خلية، وسعره في الخلية المجاورة." 
+        }
+    ];
+
+    const questions = [
+        { type: 'select', q: 'لإضافة صورة داخل المستند في برنامج الوورد، نختار القائمة:', options: ['ملف (File)', 'إدراج (Insert)', 'تحديد (Select)'], ans: 'إدراج (Insert)', hint: 'إدراج يعني إضافة شيء جديد.' },
+        { type: 'select', q: 'بعد وضع الصورة في الوورد، كيف نقوم بتصغير حجمها؟', options: ['بالسحب من الدوائر الموجودة على أطراف الصورة', 'بالضغط على زر المسافة', 'لا يمكن تصغيرها'], ans: 'بالسحب من الدوائر الموجودة على أطراف الصورة', hint: 'الدوائر أو المربعات في الزوايا تتحكم في الحجم.' },
+        { type: 'select', q: 'نريد تنظيم أسماء العائلة في الوورد بشكل مرتب، الأفضل أن ندرج:', options: ['صورة', 'جدول (Table)', 'صوت'], ans: 'جدول (Table)', hint: 'يحتوي على مربعات جاهزة للكتابة.' },
+        { type: 'select', q: 'ما هي الخطوة الهامة التي نراها قبل إرسال المستند للطابعة؟', options: ['إغلاق الكمبيوتر', 'معاينة الطباعة (Print Preview)', 'حذف الملف'], ans: 'معاينة الطباعة (Print Preview)', hint: 'لنرى شكل الورقة قبل طباعتها.' },
+        { type: 'select', q: 'ما هو برنامج Microsoft Excel؟', options: ['برنامج لتشغيل الفيديو', 'برنامج مخصص للجداول والحسابات والأرقام', 'برنامج لتصفح الإنترنت'], ans: 'برنامج مخصص للجداول والحسابات والأرقام', hint: 'يشبه دفتر المحاسب.' },
+        { type: 'true_false', q: 'في الإكسيل، العمود (Column) يكون بالطول ويأخذ حروفاً مثل A, B, C.', options: ['صح', 'خطأ'], ans: 'صح', hint: 'العمود مثل عمود المنزل، يكون واقفاً.' },
+        { type: 'true_false', q: 'في الإكسيل، الصف (Row) يكون بالعرض ويأخذ أرقاماً مثل 1, 2, 3.', options: ['صح', 'خطأ'], ans: 'صح', hint: 'الصف كطابور العرض.' },
+        { type: 'select', q: 'تقاطع العمود مع الصف (المربع الصغير في الإكسيل) يسمى:', options: ['خلية (Cell)', 'دائرة', 'نقطة'], ans: 'خلية (Cell)', hint: 'كخلية النحل المربعة.' },
+        { type: 'select', q: 'إذا كان العمود اسمه B والصف رقمه 5، فما هو اسم الخلية؟', options: ['5B', 'B5', 'BB'], ans: 'B5', hint: 'نكتب الحرف أولاً ثم الرقم.' },
+        { type: 'select', q: 'كيف نكتب رقماً داخل خلية الإكسيل؟', options: ['نضغط عليها ونبدأ بالكتابة', 'نضغط عليها 10 مرات', 'لا يمكن كتابة أرقام'], ans: 'نضغط عليها ونبدأ بالكتابة', hint: 'حدد الخلية واكتب.' },
+        { type: 'select', q: 'كتبت رقماً خطأ في الخلية وأريد تعديله (مسح جزء منه)، ماذا أفعل؟', options: ['أضغط ضغطة مزدوجة داخل الخلية', 'أغلق البرنامج', 'أرفع صوت السماعات'], ans: 'أضغط ضغطة مزدوجة داخل الخلية', hint: 'لتظهر علامة الكتابة (المؤشر) داخل الخلية.' },
+        { type: 'input', q: 'لحذف محتوى خلية بالكامل، أحددها ثم أضغط على زر الـ مسح، ما هو؟ (اكتب اسم الزر)', ans: ['delete', 'ديليت', 'backspace'], hint: 'زر الحذف الشهير.' },
+        { type: 'input', q: 'اكتب اسم الخلية الموجودة في العمود C والصف 3', ans: ['c3', 'C3'], hint: 'الحرف ثم الرقم.' },
+        { type: 'select', q: 'عند طباعة ورقة الوورد وتجد أن الكلام مقطوع، المشكلة تظهر في:', options: ['لون الشاشة', 'معاينة الطباعة', 'لوحة المفاتيح'], ans: 'معاينة الطباعة', hint: 'التي تظهر الورقة قبل طباعتها.' },
+        { type: 'select', q: 'أين تجد أمر الطباعة (Print)؟', options: ['قائمة ملف (File)', 'قائمة إدراج (Insert)', 'على سطح المكتب'], ans: 'قائمة ملف (File)', hint: 'في القائمة الأساسية.' }
+    ];
+
+    let currentSlide = 0;
+    let currentQ = 0, score = 0, seconds = 0, timer;
+    let userName = "";
+
+    window.onload = function() {
+        userName = localStorage.getItem('computerBasicsStudentName');
+        if(!userName) {
+            window.location.href = 'index.html';
+            return;
+        }
+        showSlide();
+    };
+
+    function escapeHTML(str) {
+        return str.replace(/[&<>'"]/g, tag => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+        }[tag]));
+    }
+
+    function showSlide() {
+        const item = lessons[currentSlide];
+        document.getElementById('slide-content').innerHTML = `
+            <div class="explanation-card">
+                <h3>${escapeHTML(item.title)} <span class="english-term">${escapeHTML(item.en)}</span></h3>
+                <p>${escapeHTML(item.desc)}</p>
+                <p class="example-text">💡 مثال: ${escapeHTML(item.example)}</p>
+            </div>
+        `;
+        document.getElementById('slide-num').innerText = `${currentSlide + 1} / ${lessons.length}`;
+        document.getElementById('prevSlide').disabled = currentSlide === 0;
+        document.getElementById('nextSlide').disabled = currentSlide === lessons.length - 1;
+        
+        if(currentSlide === lessons.length - 1) {
+            document.getElementById('start-quiz-btn').style.display = 'inline-block';
+        }
+    }
+
+    function moveSlide(dir) {
+        currentSlide += dir;
+        showSlide();
+    }
+
+    function initQuiz() {
+        document.getElementById('learning-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+        loadQuestion();
+        timer = setInterval(() => {
+            seconds++;
+            let m = Math.floor(seconds/60), s = seconds%60;
+            document.getElementById('timer-val').innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+        }, 1000);
+    }
+
+    function loadQuestion() {
+        const q = questions[currentQ];
+        document.getElementById('progress-text').innerText = `السؤال ${currentQ + 1} / ${questions.length}`;
+        document.getElementById('q-text').innerText = q.q;
+        document.getElementById('hint-box').style.display = 'none';
+        document.getElementById('feedback-msg').innerText = '';
+        
+        const revealBtn = document.getElementById('reveal-btn');
+        revealBtn.disabled = q.revealed;
+        revealBtn.style.opacity = q.revealed ? '0.5' : '1';
+
+        if(q.type === 'select' || q.type === 'true_false') {
+            document.getElementById('options-container').classList.remove('hidden');
+            document.getElementById('input-container').classList.add('hidden');
+            document.getElementById('options-container').innerHTML = '';
+            q.options.forEach(opt => {
+                const b = document.createElement('button');
+                b.className = 'option-btn' + (q.userAns === opt ? ' selected' : '');
+                b.innerText = opt;
+                b.onclick = () => {
+                    document.querySelectorAll('.option-btn').forEach(x => x.classList.remove('selected'));
+                    b.classList.add('selected');
+                    q.userAns = opt;
+                    document.getElementById('feedback-msg').innerText = ''; 
+                };
+                document.getElementById('options-container').appendChild(b);
+            });
+        } else if (q.type === 'input') {
+            document.getElementById('options-container').classList.add('hidden');
+            document.getElementById('input-container').classList.remove('hidden');
+            const inputEl = document.getElementById('user-input');
+            inputEl.value = q.userAns || '';
+            inputEl.oninput = () => { document.getElementById('feedback-msg').innerText = ''; };
+        }
+    }
+
+    function checkAnswer() {
+        const q = questions[currentQ];
+        let val = '';
+        if(q.type === 'select' || q.type === 'true_false') {
+            val = q.userAns;
+        } else {
+            val = document.getElementById('user-input').value.trim();
+            q.userAns = val;
+        }
+        
+        if(!val) {
+            showMessage("من فضلك أدخل الإجابة أولاً.", "wrong-text");
+            return;
+        }
+
+        let isCorrect = false;
+        if(Array.isArray(q.ans)) {
+            isCorrect = q.ans.some(a => val.toLowerCase().includes(a.toLowerCase()));
+        } else {
+            isCorrect = val.toString().trim() === q.ans.toString().trim();
+        }
+
+        if(isCorrect) {
+            if(!q.done) { 
+                score += 10; 
+                q.done = true; 
+                document.getElementById('score-val').innerText = score; 
+            }
+            showMessage("إجابة صحيحة ✅", "correct-text");
+            setTimeout(() => {
+                if(currentQ < questions.length - 1) { 
+                    currentQ++; 
+                    loadQuestion(); 
+                } else { 
+                    finishQuiz(); 
+                }
+            }, 1000);
+        } else {
+            showMessage("حاول مرة أخرى", "wrong-text");
+            document.getElementById('hint-box').style.display = 'block';
+            document.getElementById('hint-text').innerText = q.hint;
+        }
+    }
+
+    function showMessage(text, className) {
+        const msgEl = document.getElementById('feedback-msg');
+        msgEl.innerText = text;
+        msgEl.className = 'feedback-msg ' + className;
+    }
+
+    function navigate(dir) {
+        if(currentQ + dir >= 0 && currentQ + dir < questions.length) {
+            currentQ += dir;
+            loadQuestion();
+        }
+    }
+
+    function skipQuestion() {
+        if(currentQ < questions.length - 1) { 
+            currentQ++; 
+            loadQuestion(); 
+        } else { 
+            finishQuiz(); 
+        }
+    }
+
+    function revealAnswer() {
+        const q = questions[currentQ];
+        if(q.done) {
+            alert("لقد أجبت على هذا السؤال بالفعل!");
+            return;
+        }
+        if(q.revealed) return;
+
+        if(confirm("سيتم خصم 10 نقاط لإظهار الحل، موافق؟")) {
+            score -= 10;
+            q.revealed = true;
+            document.getElementById('score-val').innerText = score;
+            
+            let ansText = Array.isArray(q.ans) ? q.ans[0] : q.ans;
+            alert("الحل هو: " + ansText);
+            
+            const revealBtn = document.getElementById('reveal-btn');
+            revealBtn.disabled = true;
+            revealBtn.style.opacity = '0.5';
+        }
+    }
+
+    function finishQuiz() {
+        clearInterval(timer);
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('result-screen').classList.remove('hidden');
+        
+        let m = Math.floor(seconds/60), s = seconds%60;
+        let timeStr = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+        
+        let correctCount = questions.filter(q => q.done).length;
+        let maxScore = questions.length * 10;
+        let percentage = (score / maxScore) * 100;
+        
+        document.getElementById('congrats-msg').innerHTML = `أحسنت يا <span style="color:white;">${escapeHTML(userName)}</span>! 👏`;
+        
+        document.getElementById('final-stats').innerHTML = `
+            نتيجتك: <span style="color:var(--warning); font-weight:bold;">${score} / ${maxScore}</span><br>
+            عدد الإجابات الصحيحة: ${correctCount} / ${questions.length}<br>
+            الوقت المستغرق: ${timeStr}
+        `;
+        
+        let evalMsg = "";
+        if(percentage >= 90) evalMsg = "ممتاز جدًا 🌟";
+        else if(percentage >= 75) evalMsg = "ممتاز، استمر 👏";
+        else if(percentage >= 60) evalMsg = "جيد، ونحتاج إلى مراجعة بعض النقاط 👍";
+        else evalMsg = "ننصحك بمراجعة الحصة وإعادة الاختبار 💪";
+        
+        document.getElementById('evaluation-msg').innerText = evalMsg;
+        
+        localStorage.setItem('computerBasicsLesson4Completed', 'true');
+        localStorage.setItem('computerBasicsLesson4Score', score);
+    }
+</script>
+</body>
+</html>
